@@ -1,3 +1,5 @@
 fastapi==0.104.1
 uvicorn==0.24.0.post1
 psycopg2==2.9.9
+
+Jinja2==3.1.2
