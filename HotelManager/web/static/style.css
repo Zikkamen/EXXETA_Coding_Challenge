@@ -1,0 +1,9 @@
+
+
+#hotelRoomsOverview tbody tr td{
+    text-align: center;
+}
+
+#hotelRoomsOverview {
+    border-spacing: 5px 5px;
+}
