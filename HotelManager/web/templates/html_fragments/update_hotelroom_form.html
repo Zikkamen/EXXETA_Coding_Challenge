@@ -1,0 +1,17 @@
+<tr id={{ "hotelRoom_%s" % (hotelRoomId) }}>
+    <form id={{ "hotelRoomForm_%s" % (hotelRoomId) }} hx-post={{ "/update_hotelroom/%s" % (hotelRoomId) }} enctype="multipart/form-data" ></form>
+    <td><input form={{ "hotelRoomForm_%s" % (hotelRoomId) }} type="text" name="room_id" value="Data1"></td>
+    <td>
+        <select form={{ "hotelRoomForm_%s" % (hotelRoomId) }} name="room_size">
+            <option value="single">Einzelzimmer</option>
+            <option value="double">Doppelzimmer</option>
+            <option value="suite">Suite</option>
+        </select>
+    </td>
+    <td><input form={{ "hotelRoomForm_%s" % (hotelRoomId) }} type="checkbox" name="has_minibar" value="True"></td>
+    <td>
+        <input form={{ "hotelRoomForm_%s" % (hotelRoomId) }} type="submit" value="Update">
+        <input hx-post={{ "/cancel_edit_hotelroom/%s" % (hotelRoomId) }} type="submit" value="Cancel">
+        <input hx-post={{ "/delete_hotelroom/%s" % (hotelRoomId) }} type="submit" value="Delete">
+    </td>
+</tr>
