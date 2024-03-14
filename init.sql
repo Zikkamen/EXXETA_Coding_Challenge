@@ -1,4 +1,5 @@
-CREATE TYPE hotel_room_types AS ENUM('(Einzelzimmer', 'Doppelzimmer,', 'Suite');
+CREATE TYPE hotel_room_types AS ENUM('SINGLE', 'DOUBLE', 'SUITE');
+DROP TABLE IF EXISTS hotel_rooms;
 CREATE TABLE IF NOT EXISTS hotel_rooms (
     ID INT UNIQUE PRIMARY KEY,
     hotel_size hotel_room_types,
