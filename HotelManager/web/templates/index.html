@@ -9,26 +9,6 @@
 </head>
 <body>
     <h1>Room Manager for eXXellent Nights!</h1>
-    <table id="hotelRoomsOverview">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Zimmergröße</th>
-                <th>Minibar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in hotel_room_overview_dto.list_of_rooms -%}
-            <tr id={{ "hotelRoom_%s" % (row[0]) }}>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>
-                    <input hx-get={{ "/update_form/%s" % row[0] }} hx-swap="outerHTML" hx-target={{ "#hotelRoom_%s" % (row[0]) }} type="submit" value="Edit">
-                </td>
-            </tr>
-            {% endfor -%}
-        </tbody>
-    </table>
+    {% include 'html_fragments/hotelroom_overview_table.html' -%}
 </body>
 </html>

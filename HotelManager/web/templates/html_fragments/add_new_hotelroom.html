@@ -1,0 +1,16 @@
+<tr id={{ "placeholderNewHotelRoom" }}>
+    <form id={{ "placeholderNewHotelRoomForm" }} hx-put={{ "/add_new_hotelroom" }} hx-target="#hotelRoomsOverviewBody" hx-swap="outerHTML" enctype="multipart/form-data" ></form>
+    <td><input form={{ "placeholderNewHotelRoomForm" }} type="text" name="room_id"></td>
+    <td>
+        <select form={{ "placeholderNewHotelRoomForm" }} name="room_size">
+            <option value="SINGLE">Einzelzimmer</option>
+            <option value="DOUBLE">Doppelzimmer</option>
+            <option value="SUITE">Suite</option>
+        </select>
+    </td>
+    <td><input form={{ "placeholderNewHotelRoomForm" }} type="checkbox" name="has_minibar" value="True"></td>
+    <td>
+        <input form={{ "placeholderNewHotelRoomForm" }} type="submit" value="Add">
+        <input hx-get={{ "/cancel_add_new_hotelroom" }} hx-target="#placeholderNewHotelRoom" type="submit" value="Cancel">
+    </td>
+</tr>
