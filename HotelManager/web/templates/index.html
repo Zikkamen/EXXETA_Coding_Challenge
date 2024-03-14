@@ -8,7 +8,16 @@
     <title>"eXXellent Nights!</title>
 </head>
 <body>
-    <h1>Room Manager for eXXellent Nights!</h1>
-    {% include 'html_fragments/hotelroom_overview_table.html' -%}
+    <h1>Room Manager für eXXellent Nights!</h1>
+    <div style="display: table-row">
+        <div style="display: table-cell;">
+            {% include 'html_fragments/hotelroom_overview_table.html' -%}
+        </div>
+        <div style="display: table-cell">
+            <div style="margin-left: 50px">
+                {% include 'html_fragments/filter_elements.html' -%}
+            </div>
+        </div>
+    </div>
 </body>
 </html>
