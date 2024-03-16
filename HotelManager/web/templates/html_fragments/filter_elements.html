@@ -1,22 +1,22 @@
 <div style="border:1px solid black;">
     <h4 style="margin: 5px 5px 5px 5px">Einen Zimmer finden:</h4>
-    <form style="margin: 5px 5px 5px 5px">
+    <form style="margin: 5px 5px 5px 5px" hx-get="/get_filtered_hotelrooms">
         <label for="input_room_id">Zimmernummer:</label>
         <input type="text" name="room_id" id="input_room_id" style="margin-bottom: 5px">
         <br>
         <label for="input_room_size">Zimmergröße: </label>
         <select name="room_size" id="input_room_size" style="margin-bottom: 5px">
-            <option value="NONE">keine Angabe</option>
+            <option value="">keine Angabe</option>
             <option value="SINGLE">Einzelzimmer</option>
             <option value="DOUBLE">Doppelzimmer</option>
             <option value="SUITE">Suite</option>
         </select>
         <br>
         <label for="input_has_minibar">Besitzt Minibar: </label>
-        <select name="room_size" id="input_has_minibar" style="margin-bottom: 5px">
-            <option value="NONE">keine Angabe</option>
-            <option value="SINGLE">Ja</option>
-            <option value="DOUBLE">Nein</option>
+        <select name="has_minibar" id="input_has_minibar" style="margin-bottom: 5px">
+            <option value="">keine Angabe</option>
+            <option value="True">Ja</option>
+            <option value="False">Nein</option>
         </select>
         <br>
         <div style="text-align: right">

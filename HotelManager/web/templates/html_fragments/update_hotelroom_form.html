@@ -1,17 +1,17 @@
-<tr id={{ "hotelRoom_%s" % (hotelroom_row[0]) }}>
-    <form id={{ "hotelRoomForm_%s" % (hotelroom_row[0]) }} hx-post={{ "/update_hotelroom/%s" % (hotelroom_row[0]) }} hx-target="#hotelRoomsOverviewBody" hx-swap="outerHTML" enctype="multipart/form-data" ></form>
-    <td><input form={{ "hotelRoomForm_%s" % (hotelroom_row[0]) }} type="text" name="room_id" value={{ hotelroom_row[0] }}></td>
+<tr id={{ "hotelRoom_%s" % (hotelroom.room_id) }}>
+    <form id={{ "hotelRoomForm_%s" % (hotelroom.room_id) }} hx-post={{ "/update_hotelroom/%s" % (hotelroom.room_id) }} hx-target="#hotelRoomsOverviewBody" hx-swap="outerHTML" enctype="multipart/form-data" ></form>
+    <td><input form={{ "hotelRoomForm_%s" % (hotelroom.room_id) }} type="text" name="room_id" value={{ hotelroom.room_id }}></td>
     <td>
-        <select form={{ "hotelRoomForm_%s" % (hotelroom_row[0]) }} name="room_size">
-            <option value="SINGLE" {% if hotelroom_row[1] == 'SINGLE' %}selected="selected"{% endif %}>Einzelzimmer</option>
-            <option value="DOUBLE" {% if hotelroom_row[1] == 'DOUBLE' %}selected="selected"{% endif %}>Doppelzimmer</option>
-            <option value="SUITE" {% if hotelroom_row[1] == 'SUITE' %}selected="selected"{% endif %}>Suite</option>
+        <select form={{ "hotelRoomForm_%s" % (hotelroom.room_id) }} name="room_size">
+            <option value="SINGLE" {% if hotelroom_room_size == 'SINGLE' %}selected="selected"{% endif %}>Einzelzimmer</option>
+            <option value="DOUBLE" {% if hotelroom_room_size == 'DOUBLE' %}selected="selected"{% endif %}>Doppelzimmer</option>
+            <option value="SUITE" {% if hotelroom_room_size == 'SUITE' %}selected="selected"{% endif %}>Suite</option>
         </select>
     </td>
-    <td><input form={{ "hotelRoomForm_%s" % (hotelroom_row[0]) }} type="checkbox" name="has_minibar" value="True" {% if hotelroom_row[2] == 'True' %}checked{% endif %}></td>
+    <td><input form={{ "hotelRoomForm_%s" % (hotelroom.room_id) }} type="checkbox" name="has_minibar" value="True" {% if hotelroom.has_minibar == 'True' %}checked{% endif %}></td>
     <td>
-        <input form={{ "hotelRoomForm_%s" % (hotelroom_row[0]) }} type="submit" value="Update">
-        <input hx-delete={{ "/delete_hotelroom/%s" % (hotelroom_row[0]) }} type="submit" value="Delete" hx-target={{ "#hotelRoom_%s" % (hotelroom_row[0]) }} hx-swap="delete">
-        <input hx-get={{ "/cancel_edit_hotelroom/%s" % (hotelroom_row[0]) }} hx-target={{ "#hotelRoom_%s" % (hotelroom_row[0]) }} hx-swap="outerHTML" type="submit" value="Cancel">
+        <input form={{ "hotelRoomForm_%s" % (hotelroom.room_id) }} type="submit" value="Update">
+        <input hx-delete={{ "/delete_hotelroom/%s" % (hotelroom.room_id) }} type="submit" value="Delete" hx-target={{ "#hotelRoom_%s" % (hotelroom.room_id) }} hx-swap="delete">
+        <input hx-get={{ "/cancel_edit_hotelroom/%s" % (hotelroom.room_id) }} hx-target={{ "#hotelRoom_%s" % (hotelroom.room_id) }} hx-swap="outerHTML" type="submit" value="Cancel">
     </td>
 </tr>

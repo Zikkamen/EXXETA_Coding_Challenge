@@ -1,8 +1,8 @@
-<tr id={{ "hotelRoom_%s" % (hotelroom_row[0]) }}>
-    <td>{{ hotelroom_row[0] }}</td>
-    <td>{{ hotelroom_row[1] }}</td>
-    <td>{{ hotelroom_row[2] }}</td>
+<tr id={{ "hotelRoom_%s" % (hotelroom.room_id) }}>
+    <td>{{ hotelroom.room_id }}</td>
+    <td>{{ hotelroom.room_size }}</td>
+    <td>{{ hotelroom.has_minibar }}</td>
     <td>
-        <input hx-get={{ "/update_form/%s" % hotelroom_row[0] }} hx-swap="outerHTML" hx-target={{ "#hotelRoom_%s" % (hotelroom_row[0]) }} type="submit" value="Edit">
+        <input hx-get={{ "/update_form/%s" % hotelroom.room_id }} hx-swap="outerHTML" hx-target={{ "#hotelRoom_%s" % (hotelroom.room_id) }} type="submit" value="Edit">
     </td>
 </tr>

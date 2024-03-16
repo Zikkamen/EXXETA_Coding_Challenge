@@ -17,9 +17,6 @@ class HotelRoomDTO(BaseModel):
     room_size: HotelRoomType
     has_minibar: bool
 
-    def to_list(self):
-        return [self.room_id, self.room_size, self.has_minibar]
-
 
 class HotelRoomTypeMapper:
     def __init__(self):

@@ -8,18 +8,20 @@
             </tr>
         </thead>
         <tbody id="hotel_room_overview_table_body">
-            {% for row in hotelroom_overview_dto.list_of_rooms -%}
-            <tr id={{ "hotelRoom_%s" % (row[0]) }}>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
+            {% for hotelroom in hotelroom_overview_dto.list_of_hotelrooms -%}
+            <tr id={{ "hotelRoom_%s" % (hotelroom.room_id) }}>
+                <td>{{ hotelroom.room_id }}</td>
+                <td>{{ hotelroom.room_size }}</td>
+                <td>{{ hotelroom.has_minibar }}</td>
                 <td>
-                    <input hx-get={{ "/update_form/%s" % row[0] }} hx-swap="outerHTML" hx-target={{ "#hotelRoom_%s" % (row[0]) }} type="submit" value="Edit">
+                    <input hx-get={{ "/update_form/%s" % hotelroom.room_id }} hx-swap="outerHTML" hx-target={{ "#hotelRoom_%s" %  hotelroom.room_id }} type="submit" value="Edit">
                 </td>
             </tr>
             {% endfor -%}
             <tr id="placeholderNewHotelRoom" style="display: none"></tr>
         </tbody>
     </table>
-    <button style="margin-top: 20px" hx-get="{{ "/get_add_new_hotelroom_form" }}" hx-target="#placeholderNewHotelRoom" hx-swap="outerHTML">Zimmer hinzufügen</button>
+    <div style="text-align: right">
+        <button style="margin-top: 20px" hx-get="{{ "/get_add_new_hotelroom_form" }}" hx-target="#placeholderNewHotelRoom" hx-swap="outerHTML">Zimmer hinzufügen</button>
+    </div>
 </div>
