@@ -44,7 +44,6 @@ class HotelManagerService:
                                              hotelroom_conditions: HotelRoomConditionsDTO,
                                              language: Language) -> list[HotelRoomWebDTO]:
         hotelrooms_dto_list = self.persistence_service.get_all_hotelrooms_fulfilling_conditions(hotelroom_conditions)
-        print(hotelrooms_dto_list)
 
         return convert_hotelroom_dto_to_hotelroomweb_dto(hotelrooms_dto_list, language)
 
