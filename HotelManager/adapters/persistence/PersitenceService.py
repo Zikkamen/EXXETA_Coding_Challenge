@@ -1,6 +1,8 @@
+import functools
 from pathlib import Path
 
 from HotelManager.adapters.persistence.DatabaseService import DatabaseService
+from HotelManager.application.model.HotelRoomConditionsDTO import HotelRoomConditionsDTO
 from HotelManager.application.model.HotelRoomDTO import HotelRoomDTO, HotelRoomType, HotelRoomTypeMapper
 
 
@@ -18,15 +20,27 @@ class PersistenceService:
 
         self.__initialize_cache()
 
+    def get_all_hotelrooms(self) -> list[HotelRoomDTO]:
+        return [value for key, value in self.cached_data.items()]
+
+    def get_all_hotelrooms_fulfilling_conditions(self, hotel_room_condition: HotelRoomConditionsDTO) -> list[HotelRoomDTO]:
+        list_of_ids = self.__get_ids_from_condition(hotel_room_condition)
+
+        return [self.cached_data[hotelroom_id] for hotelroom_id in list_of_ids]
+
     def add_hotelroom_to_database(self, hotelroom: HotelRoomDTO) -> None:
         if hotelroom.room_id in self.cached_data:
             raise Exception('Error adding hotel room. Hotel room already exists', hotelroom.room_id)
 
         self.database_service.add_hotelroom_to_database(hotelroom)
         self.cached_data[hotelroom.room_id] = hotelroom
+        self.__get_ids_from_condition.cache_clear()
 
-    def get_all_hotelrooms(self) -> list[HotelRoomDTO]:
-        return [value for key, value in self.cached_data.items()]
+    def get_information_hotelroom_by_id(self, room_id: int) -> HotelRoomDTO:
+        if room_id not in self.cached_data:
+            raise Exception('Error retrieving data to hotel room. Hotel room does not exist', room_id, self.cached_data)
+
+        return self.cached_data.get(room_id)
 
     def update_hotelroom_in_database(self, room_id: int, hotelroom: HotelRoomDTO) -> None:
         if room_id not in self.cached_data:
@@ -40,6 +54,7 @@ class PersistenceService:
             del self.cached_data[room_id]
 
         self.cached_data[hotelroom.room_id] = hotelroom
+        self.__get_ids_from_condition.cache_clear()
 
     def delete_hotelroom_in_database(self, room_id: int):
         if room_id not in self.cached_data:
@@ -47,12 +62,13 @@ class PersistenceService:
 
         self.database_service.delete_hotelroom_from_database(room_id)
         del self.cached_data[room_id]
+        self.__get_ids_from_condition.cache_clear()
 
-    def get_information_hotelroom_by_id(self, room_id: int) -> HotelRoomDTO:
-        if room_id not in self.cached_data:
-            raise Exception('Error retrieving data to hotel room. Hotel room does not exist', room_id, self.cached_data)
+    @functools.lru_cache(maxsize=10)
+    def __get_ids_from_condition(self, hotel_room_condition: HotelRoomConditionsDTO) -> list[int]:
+        hotelrooms_list = self.database_service.get_all_hotelrooms_with_conditions_from_database(hotel_room_condition)
 
-        return self.cached_data.get(room_id)
+        return [hotelroom[0] for hotelroom in hotelrooms_list]
 
     def __initialize_database(self) -> None:
         with open(self.root_path.joinpath('credentials/database_credentials.xml')) as fs:

@@ -46,3 +46,6 @@ class HotelRoomTypeMapper:
 
     def type_to_website_display_german(self, room_type: HotelRoomType) -> str:
         return self.__type_to_website_german_map[room_type]
+
+    def type_is_in_type_map(self, room_type_str) -> bool:
+        return room_type_str in self.__string_to_type_map

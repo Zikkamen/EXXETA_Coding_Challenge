@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 
 import psycopg2
 
+from HotelManager.adapters.persistence.SQLCheckerAndMapper import SQLCheckerAndMapper
+from HotelManager.application.model.HotelRoomConditionsDTO import HotelRoomConditionsDTO
 from HotelManager.application.model.HotelRoomDTO import HotelRoomDTO, HotelRoomTypeMapper
 
 
@@ -17,11 +19,13 @@ class DatabaseService:
             port=xml_tree.find('port').text
         )
 
+        self.sql_converter_and_checker = SQLCheckerAndMapper()
+
     def __del__(self) -> None:
         self.conn.close()
 
     def add_hotelroom_to_database(self, hotelroom: HotelRoomDTO) -> None:
-        add_hotelroom_query = "INSERT INTO hotel_rooms(ID, hotel_size, has_minibar) VALUES (%s, '%s', %s);" \
+        add_hotelroom_query = "INSERT INTO hotel_rooms(ID, hotelroom_size, has_minibar) VALUES (%s, '%s', %s);" \
                               % (hotelroom.room_id, HotelRoomTypeMapper().type_to_string(hotelroom.room_size),
                                  hotelroom.has_minibar)
 
@@ -32,13 +36,19 @@ class DatabaseService:
 
         return self.__execute_read_query(get_all_hotelrooms_query)
 
+    def get_all_hotelrooms_with_conditions_from_database(self, hotel_room_condition: HotelRoomConditionsDTO) -> list:
+        sql_where_condition = self.sql_converter_and_checker.convert_and_check_hotelroom_to_sql(hotel_room_condition)
+        get_all_hotelrooms_query = "SELECT ID FROM hotel_rooms" + sql_where_condition
+
+        return self.__execute_read_query(get_all_hotelrooms_query)
+
     def delete_hotelroom_from_database(self, room_id: int) -> None:
         delete_hotelroom_query = "DELETE FROM hotel_rooms WHERE ID = %s;" % (room_id)
 
         self.__execute_modify_query(delete_hotelroom_query)
 
     def update_hotelroom_in_database(self, room_id: int, hotelroom: HotelRoomDTO) -> None:
-        update_hotelroom_query = "UPDATE hotel_rooms SET ID=%s, hotel_size='%s', has_minbar=%s WHERE ID=%s;" \
+        update_hotelroom_query = "UPDATE hotel_rooms SET ID=%s, hotelroom_size='%s', has_minibar=%s WHERE ID=%s;" \
                        % (hotelroom.room_id, HotelRoomTypeMapper().type_to_string(hotelroom.room_size),
                           hotelroom.has_minibar, room_id)
 

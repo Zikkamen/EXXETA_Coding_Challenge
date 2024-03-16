@@ -19,6 +19,15 @@ def hotelroom_to_website_mapper(hotelroom: HotelRoomDTO, language: Optional[Lang
                            has_minibar=str(hotelroom.has_minibar))
 
 
+def convert_hotelroom_dto_to_hotelroomweb_dto(hotelroom_dto_list: list[HotelRoomDTO], language: Language) -> list[HotelRoomWebDTO]:
+    converted_hotelrooms = []
+
+    for hotelroom in hotelroom_dto_list:
+        converted_hotelrooms.append(hotelroom_to_website_mapper(hotelroom, language))
+
+    return converted_hotelrooms
+
+
 class HotelManagerService:
     def __init__(self, root_path: Path) -> None:
         self.persistence_service = PersistenceService(root_path)
@@ -26,18 +35,18 @@ class HotelManagerService:
     def add_hotelroom(self, hotelroom: HotelRoomDTO) -> None:
         self.persistence_service.add_hotelroom_to_database(hotelroom)
 
-    def get_all_hotelrooms(self, language: Language) -> list[HotelRoomWebDTO]:
+    def get_all_hotelrooms(self, language: Language = None) -> list[HotelRoomWebDTO]:
         hotelrooms_dto_list = self.persistence_service.get_all_hotelrooms()
 
-        converted_hotelrooms = []
+        return convert_hotelroom_dto_to_hotelroomweb_dto(hotelrooms_dto_list, language)
 
-        for hotelroom in hotelrooms_dto_list:
-            converted_hotelrooms.append(hotelroom_to_website_mapper(hotelroom, language))
+    def get_hotelrooms_fulfilling_conditions(self,
+                                             hotelroom_conditions: HotelRoomConditionsDTO,
+                                             language: Language) -> list[HotelRoomWebDTO]:
+        hotelrooms_dto_list = self.persistence_service.get_all_hotelrooms_fulfilling_conditions(hotelroom_conditions)
+        print(hotelrooms_dto_list)
 
-        return converted_hotelrooms
-
-    def get_hotelrooms_fulfilling_conditions(self, hotelroom_conditions: HotelRoomConditionsDTO) -> list[HotelRoomWebDTO]:
-        pass
+        return convert_hotelroom_dto_to_hotelroomweb_dto(hotelrooms_dto_list, language)
 
     def update_room(self, room_id: int, hotelroom: HotelRoomDTO) -> None:
         self.persistence_service.update_hotelroom_in_database(room_id, hotelroom)

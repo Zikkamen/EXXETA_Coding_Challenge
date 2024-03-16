@@ -1,6 +1,6 @@
 <div style="border:1px solid black;">
     <h4 style="margin: 5px 5px 5px 5px">Einen Zimmer finden:</h4>
-    <form style="margin: 5px 5px 5px 5px" hx-get="/get_filtered_hotelrooms">
+    <form style="margin: 5px 5px 5px 5px" hx-get="/get_filtered_hotelrooms" hx-swap="outerHtml" hx-target="#hotelRoomsOverviewBody">
         <label for="input_room_id">Zimmernummer:</label>
         <input type="text" name="room_id" id="input_room_id" style="margin-bottom: 5px">
         <br>

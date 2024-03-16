@@ -51,12 +51,11 @@ async def get_filtered_hotelrooms(request: Request,
         hotel_room_conditions.has_minibar = has_minibar
 
     hotelroom_overview_dto = WebHotelRoomOverviewDTO(
-        list_of_hotelrooms=hotel_manager_service.get_all_hotelrooms(Language.GERMAN)
+        list_of_hotelrooms=hotel_manager_service.get_hotelrooms_fulfilling_conditions(hotel_room_conditions, Language.GERMAN)
     )
 
-    print(hotel_room_conditions)
-
-    return {}
+    return templates.TemplateResponse('/html_fragments/hotelroom_overview_table.html',
+                                      {'request': request, 'hotelroom_overview_dto': hotelroom_overview_dto})
 
 
 @app.post("/update_hotelroom/{old_room_id}")
