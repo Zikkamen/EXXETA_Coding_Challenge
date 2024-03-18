@@ -2,12 +2,13 @@ import xml.etree.ElementTree as ET
 
 import psycopg2
 
+from HotelManager.adapters.persistence.DatabaseServiceInterface import DatabaseServiceInterface
 from HotelManager.adapters.persistence.SQLCheckerAndMapper import SQLCheckerAndMapper
 from HotelManager.application.model.HotelRoomConditionsDTO import HotelRoomConditionsDTO
 from HotelManager.application.model.HotelRoomDTO import HotelRoomDTO, HotelRoomTypeMapper
 
 
-class DatabaseService:
+class DatabaseService(DatabaseServiceInterface):
     def __init__(self, xml_string: str) -> None:
         xml_tree = ET.fromstring(xml_string)
 
@@ -31,12 +32,12 @@ class DatabaseService:
 
         self.__execute_modify_query(add_hotelroom_query)
 
-    def get_all_hotelrooms_from_database(self) -> list:
+    def get_all_hotelrooms_from_database(self) -> list[tuple]:
         get_all_hotelrooms_query = "SELECT * FROM hotel_rooms"
 
         return self.__execute_read_query(get_all_hotelrooms_query)
 
-    def get_all_hotelrooms_with_conditions_from_database(self, hotel_room_condition: HotelRoomConditionsDTO) -> list:
+    def get_all_hotelrooms_with_conditions_from_database(self, hotel_room_condition: HotelRoomConditionsDTO) -> list[tuple]:
         sql_where_condition = self.sql_converter_and_checker.convert_and_check_hotelroom_to_sql(hotel_room_condition)
         get_all_hotelrooms_query = "SELECT ID FROM hotel_rooms" + sql_where_condition
 

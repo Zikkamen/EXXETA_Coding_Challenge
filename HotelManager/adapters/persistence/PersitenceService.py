@@ -4,9 +4,10 @@ from pathlib import Path
 from HotelManager.adapters.persistence.DatabaseService import DatabaseService
 from HotelManager.application.model.HotelRoomConditionsDTO import HotelRoomConditionsDTO
 from HotelManager.application.model.HotelRoomDTO import HotelRoomDTO, HotelRoomType, HotelRoomTypeMapper
+from HotelManager.application.services.PersistenceServiceInterface import PersistenceServiceInterface
 
 
-class PersistenceService:
+class PersistenceService(PersistenceServiceInterface):
     def __init__(self, root_path: Path) -> None:
         self.root_path = root_path
 
@@ -53,6 +54,7 @@ class PersistenceService:
         if room_id != hotelroom.room_id:
             del self.cached_data[room_id]
 
+        self.database_service.update_hotelroom_in_database(room_id, hotelroom)
         self.cached_data[hotelroom.room_id] = hotelroom
         self.__get_ids_from_condition.cache_clear()
 
