@@ -1,9 +1,6 @@
 from enum import Enum
-from typing import Optional
 
 from pydantic import BaseModel
-
-from HotelManager.application.Language import Language
 
 
 class HotelRoomType(Enum):

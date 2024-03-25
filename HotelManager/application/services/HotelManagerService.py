@@ -15,7 +15,7 @@ def hotelroom_to_website_mapper(hotelroom: HotelRoomDTO, language: Optional[Lang
                                has_minibar=str(hotelroom.has_minibar))
 
     return HotelRoomWebDTO(room_id=hotelroom.room_id,
-                           room_size=hotelroom.room_size,
+                           room_size=HotelRoomTypeMapper().type_to_string(hotelroom.room_size),
                            has_minibar=str(hotelroom.has_minibar))
 
 
