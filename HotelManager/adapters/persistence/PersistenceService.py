@@ -8,11 +8,14 @@ from HotelManager.application.services.PersistenceServiceInterface import Persis
 
 
 class PersistenceService(PersistenceServiceInterface):
-    def __init__(self, root_path: Path) -> None:
+    def __init__(self, root_path: Path, initialize_data: bool = True) -> None:
         self.root_path = root_path
 
         self.database_service = None
         self.cached_data = {}
+
+        if not initialize_data:
+            return
 
         self.__initialize_database()
 

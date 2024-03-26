@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional
 
-from HotelManager.adapters.persistence.PersitenceService import PersistenceService
+from HotelManager.adapters.persistence.PersistenceService import PersistenceService
 from HotelManager.application.Language import Language
 from HotelManager.application.model.HotelRoomConditionsDTO import HotelRoomConditionsDTO
 from HotelManager.application.model.HotelRoomDTO import HotelRoomDTO, HotelRoomTypeMapper
